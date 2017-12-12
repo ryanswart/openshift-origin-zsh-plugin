@@ -7,3 +7,8 @@ function podlogs(){
   echo "Getting logs for $1 for the last $2 duration"
   oc logs -f --since=$2 `oc get pods | grep $1 | grep 'Running' | grep -Ev 'deploy' | awk '{print $1}'`
 }
+
+function podport(){
+  echo "Forwarding port $2 on $1"
+  oc port-forward `oc get pods | grep $1 | grep 'Running' | grep -Ev 'deploy' | awk '{print $1}'` $2
+}
